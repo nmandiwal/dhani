@@ -10,7 +10,7 @@ function initialize() {
         var opts = {sendMethod: 'auto'};
         
         // Replace the data source URL on next line with your data source URL.
-        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1t2_HHLkibAybPORmXuDDEFEyetC3p7r1blQRpjzinXg/edit?usp=sharing', opts);         
+        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1CnNcfMPdwKTBOD4WOWEcKCuqCJTRpkbFMn4RXC4iIRw/edit?usp=sharing', opts);         
         
         // Send the query with a callback function.
         query.send(handleQueryResponse);
@@ -35,7 +35,7 @@ alert(data);
       google.setOnLoadCallback(initialize);
     
   </script>
-  <script src="https://apis.google.com/js/auth.js?onload=init"></script>
+  <!--script src="https://apis.google.com/js/auth.js?onload=init"></script-->
   <div id="chart_div"></div>
 </body>
 </html>      
