@@ -29,7 +29,7 @@ function handleQueryResponse(response) {
         data.addColumn('string', 'ToolTip');
 
         for (var i = 1; i < data1.getNumberOfRows(); i++) {
-          var age;
+          var age = null;
           var born = data1.getValue(i, 3);
           var died = data1.getValue(i, 4);
           var isDied = false;
