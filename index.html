@@ -52,6 +52,7 @@ function handleQueryResponse(response) {
           }
 
           var name = data1.getValue(i, 0);
+          var displayName = name.split('-')[0];
           var parent = data1.getValue(i, 1);
           var title = data1.getValue(i, 2);
           var tooltip = age;
@@ -62,15 +63,19 @@ function handleQueryResponse(response) {
               tooltip = title;
             }
           }
+          var redColor = '<div style="color:red; font-style:italic">';
           if (isDied) {
 
             data.addRow([{
               'v': name,
-              'f': '<div style="color:red; font-style:italic">' + name
+              'f': redColor + displayName
             }, parent, tooltip]);
 
           } else {
-            data.addRow([name, parent, tooltip]);
+            data.addRow([{
+              'v': name,
+              'f': displayName
+            }, parent, tooltip]);
           }
 
         }
