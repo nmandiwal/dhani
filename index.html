@@ -9,7 +9,6 @@ google.load("visualization", "1", {packages:["corechart","orgchart"]});
 function initialize() {
         var opts = {sendMethod: 'auto'};
         
-        // Replace the data source URL on next line with your data source URL.
         var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1CnNcfMPdwKTBOD4WOWEcKCuqCJTRpkbFMn4RXC4iIRw/edit?usp=sharing', opts);         
         
         // Send the query with a callback function.
@@ -22,12 +21,61 @@ function handleQueryResponse(response) {
         return;
       }
 
-    var data = response.getDataTable();
-//alert(data);
-  var options = {
-    title: 'Company Performance'
-  };
+    var data1 = response.getDataTable();
+  
+  var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Parent');
+        data.addColumn('string', 'ToolTip');
 
+        for (var i = 1; i < data1.getNumberOfRows(); i++) {
+          var age;
+          var born = data1.getValue(i, 3);
+          var died = data1.getValue(i, 4);
+          var isDied = false;
+          if ((died == null || died == 'no')) {
+            if (born != null) {
+              age = 'born:' + born;
+            }
+          } else if (died == 'yes') {
+            isDied = true;
+            if (born != null) {
+              age = 'born:' + born;
+            }
+          } else {
+          	isDied = true;
+            if (born != null) {
+              age = 'born:' + born + ' died:' + died;
+            } else {
+              age = 'died:' + died;
+            }
+          }
+
+          var name = data1.getValue(i, 0);
+          var parent = data1.getValue(i, 1);
+          var title = data1.getValue(i, 2);
+          var tooltip = age;
+          if (title != null) {
+            if (age != null) {
+              tooltip += ', ' + title;
+            } else {
+              tooltip = title;
+            }
+          }
+          if (isDied) {
+
+            data.addRow([{
+              'v': name,
+              'f': '<div style="color:red; font-style:italic">' + name
+            }, parent, tooltip]);
+
+          } else {
+            data.addRow([name, parent, tooltip]);
+          }
+
+        }
+  
+//alert(data);
   var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
   chart.draw(data, {'allowHtml':true});
 }
